@@ -1,0 +1,93 @@
+@import 'tailwindcss';
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+@source '../**/*.blade.php';
+@source '../**/*.js';
+
+@theme {
+    --font-sans: 'Inter', ui-sans-serif, system-ui, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    min-height: 100vh;
+    background-color: #1a1a2e;
+    color: #fff;
+    margin: 0;
+}
+
+.auth-container {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.auth-card {
+    width: 90%;
+    max-width: 400px;    
+    background: #2e2e4e;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0,0,0,.2);
+    box-sizing: border-box;
+}
+
+.input-group {
+    margin-bottom: 15px;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 15px;
+    border: none;
+    border-radius: 5px;
+    background: #3a3a5e;
+    color: #fff;
+    font-size: 16px;
+}
+
+.input-group input::placeholder {
+    color: #aaa;
+}
+
+.login-btn, .register-btn {
+    width: 100%;
+    padding: 15px;
+    background: #764ba2;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.login-btn:hover, .register-btn:hover {
+    background: #5e3a8a;
+}
+
+.footer {
+    text-align: center;
+    margin-top: 15px;
+    font-size: 0.9rem;
+    color: #aaa;
+}
+
+.footer a {
+    text-decoration: none;
+    color: #764ba2;
+}
+
+.footer a:hover {
+    text-decoration: underline;
+}
+
+.text-danger {
+    color: #dc3545;
+    font-size: 0.8rem;
+    margin-top: 5px;
+    display: block;
+}
