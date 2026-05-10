@@ -2,12 +2,13 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, viewport-fit=cover">
     <title>Login</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-    
+    <link rel="manifest" href="/manifest.json">
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
     <style>
         body {
             font-family: 'Inter', sans-serif;
@@ -127,6 +128,53 @@
             margin-top: 5px;
             display: block;
         }
+
+        #installBtn {
+            width: 100%;
+            max-width: 400px;
+            padding: 12px;
+            background: #3a3a5e;
+            color: #fff;
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        #installBtn:hover {
+            background: #44446e;
+            transform: translateY(-2px);
+        }
+
+        @media (max-width: 480px) {
+        .auth-container {
+            padding: 15px; /* Less padding on the sides */
+            justify-content: flex-start; /* Start from top instead of middle if screen is short */
+            padding-top: 40px; 
+        }
+
+        .glass-card, .auth-card {
+            width: 100%; /* Take up full width */
+            max-width: 100%; /* Remove the 400px limit on small screens */
+            padding: 20px;
+            border-radius: 15px; /* Slightly rounder for mobile look */
+        }
+
+        .weather-temp {
+            font-size: 2.2rem; /* Make temperature prominent */
+        }
+
+        .input-group input {
+            font-size: 16px; /* Prevents iOS from auto-zooming when clicking inputs */
+            padding: 12px;
+        }
+
+        .login-btn {
+            padding: 14px;
+            font-size: 1.1rem;
+        }
+    }
     </style>
 </head>
 <body>
@@ -165,6 +213,10 @@
             
             <p class="footer">Don't have an account? <a href="{{ route('register')}}">Create an Account</a></p>
         </form>
+        <button id="installBtn" class="btn btn-secondary w-100 mt-3 fw-semibold" style="display:none;">
+            Install App
+        </button>
+
     </div>
 
     <script>
@@ -198,6 +250,43 @@
         }
         loadWeather();
         setInterval(loadWeather, 60000);
+
+        //Install Logic
+        let deferredPrompt;
+        const installBtn = document.getElementById('installBtn');
+
+        window.addEventListener('beforeinstallprompt', (e) => {
+            // Prevent the default mini-infobar from appearing on mobile
+            e.preventDefault();
+            // Stash the event so it can be triggered later.
+            deferredPrompt = e;
+            // Update UI notify the user they can install the PWA
+            installBtn.style.display = 'block';
+
+            installBtn.addEventListener('click', () => {
+                // Hide the app provided install promotion
+                installBtn.style.display = 'none';
+                // Show the install prompt
+                deferredPrompt.prompt();
+                // Wait for the user to respond to the prompt
+                deferredPrompt.userChoice.then((choiceResult) => {
+                    if (choiceResult.outcome === 'accepted') {
+                        console.log('User accepted the install prompt');
+                    } else {
+                        console.log('User dismissed the install prompt');
+                    }
+                    deferredPrompt = null;
+                });
+            });
+        });
+
+
+        // Hide button if app is already installed
+        window.addEventListener('appinstalled', () => {
+            installBtn.style.display = 'none';
+            deferredPrompt = null;
+            console.log('PWA was installed');
+        });
     </script>
 </body>
 </html>

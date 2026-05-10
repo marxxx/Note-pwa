@@ -8,6 +8,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
     <style>
         body {
             font-family: 'Inter', sans-serif;
@@ -110,6 +111,22 @@
             background: #764ba2;
             color: #fff;
         }
+
+        .btn-delete {
+            background-color: #dc3545; /* Solid Red */
+            color: white;
+            border: none;
+            font-weight: 500;
+            padding: 8px;
+            border-radius: 6px;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        .btn-delete:hover {
+            background-color: #a71d2a; /* Darker Red on hover */
+            color: white;
+            transform: translateY(-1px); /* Slight lift effect */
+        }
     </style>
 </head>
 <body>
@@ -160,7 +177,7 @@
                     <form method="POST" action="/notes/{{ $note->id }}" class="mt-2">
                         @csrf
                         @method('DELETE')
-                        <button class="btn btn-sm btn-outline-danger w-100">Delete</button>
+                        <button class="btn btn-sm btn-delete w-100">Delete</button>
                     </form>
                 </div>
             @endforeach

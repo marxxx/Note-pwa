@@ -7,8 +7,10 @@
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
+    <link rel="stylesheet" href="https://cloudflare.com">
     <link rel="manifest" href="/manifest.json">
     <meta name="theme-color" content="#0f172a">
+
 </head>
 <body class="bg-slate-100 min-h-screen">
     @yield('content')
